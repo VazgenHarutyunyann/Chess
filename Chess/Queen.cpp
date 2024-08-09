@@ -10,7 +10,7 @@ queen::queen(const std::string& place, const std::string& color) : figure(place,
 queen::~queen()
 {}
 
-bool queen::underAttack(const std::string& p, figure* board[8][8])
+bool queen::underAttack(const std::string& p, figure* myboard[8][8])
 {
     int newRow = p[1] - '1';
     int newCol = p[0] - 'A';
@@ -28,7 +28,7 @@ bool queen::underAttack(const std::string& p, figure* board[8][8])
 
     for (int row = startRow + rowStep, col = startCol + colStep; row != newRow || col != newCol; row += rowStep, col += colStep) 
     {
-        if (board[row][col] != nullptr && board[row][col]->getSymbol() != 'K') 
+        if (myboard[row][col] != nullptr && myboard[row][col]->getSymbol() != 'K') 
         {
             return false; 
         }

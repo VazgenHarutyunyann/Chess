@@ -11,7 +11,7 @@ pawn::~pawn()
 {
 
 }
-bool pawn::underAttack(const std::string& p, figure* board[8][8])
+bool pawn::underAttack(const std::string& p, figure* myboard[8][8])
 {
     int newRow = p[1] - '1';
     int newCol = p[0] - 'A';
@@ -25,12 +25,12 @@ bool pawn::underAttack(const std::string& p, figure* board[8][8])
     if (newCol == startCol) 
     {
         
-        if (newRow == startRow + direction && board[newRow][newCol] == nullptr) 
+        if (newRow == startRow + direction && myboard[newRow][newCol] == nullptr) 
         {
             
             return true;
         }
-        if (startRow == (color == "white" ? 1 : 6) && newRow == startRow + 2 * direction && board[startRow + direction][newCol] == nullptr && board[newRow][newCol] == nullptr) 
+        if (startRow == (color == "white" ? 1 : 6) && newRow == startRow + 2 * direction && myboard[startRow + direction][newCol] == nullptr && myboard[newRow][newCol] == nullptr) 
         {
             return true;
         }
@@ -38,7 +38,7 @@ bool pawn::underAttack(const std::string& p, figure* board[8][8])
     
     else if (abs(newCol - startCol) == 1 && newRow == startRow + direction) 
     {
-        if (board[newRow][newCol] != nullptr) 
+        if (myboard[newRow][newCol] != nullptr) 
         {
             return true;
         }

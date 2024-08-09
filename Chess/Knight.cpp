@@ -11,7 +11,7 @@ knight::~knight()
 {
 
 }
-bool knight::underAttack(const std::string& p, figure* board[8][8])
+bool knight::underAttack(const std::string& p, figure* myboard[8][8])
 {
     int currX = place[0] - 'A' + 1;
     int currY = place[1] - '1' + 1;

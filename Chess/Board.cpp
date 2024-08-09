@@ -1,51 +1,51 @@
 #include <iostream>
 
-#include "board.hpp"
+#include "Board.hpp"
 #include "King.hpp"
 
-bool chessboard::inBoard = true;
+bool board::inBoard = true;
 
-chessboard::chessboard()
+board::board()
 {
     for (int i = 0; i < 8; i++)
     {
         for (int j = 0; j < 8; j++)
         {
-            board[i][j] = nullptr;
+            myboard[i][j] = nullptr;
         }
     }
 }
-chessboard::~chessboard() 
+board::~board() 
 {
     for (int i = 0; i < 8; ++i) 
     {
         for (int j = 0; j < 8; ++j) 
         {
-            delete board[i][j];
+            delete myboard[i][j];
         }
     }
 }
-void chessboard::placepiece(const std::string& pos, figure* piece)
+void board::placepiece(const std::string& pos, figure* piece)
 {
     int row = pos[1] - '1';
     int col = pos[0] - 'A';
     if (row < 0 || row >= 8 || col < 0 || col >= 8) 
     {
         std::cout << "Is not in board: " << std::endl;
-        chessboard::inBoard = false;
+        board::inBoard = false;
         return;
     }
 
-    delete board[row][col];
-    board[row][col] = piece; 
+    delete myboard[row][col];
+    myboard[row][col] = piece; 
 }
-bool chessboard::checkmate_after_one_move() {
+bool board::checkmate_after_one_move() {
     std::string kingPosition;
     for (int row = 0; row < 8; row++)
     {
         for (int col = 0; col < 8; col++)
         {
-            figure* piece = board[row][col];
+            figure* piece = myboard[row][col];
             if (piece != nullptr && piece->getSymbol() == 'K' && piece->getColor() == "Black")
             {
                 kingPosition = std::string(1, col + 'A') + std::to_string(row + 1);
@@ -64,7 +64,7 @@ bool chessboard::checkmate_after_one_move() {
     {
         for (int col = 0; col < 8; ++col) 
         {
-            figure* piece = board[row][col];
+            figure* piece = myboard[row][col];
             if (piece != nullptr && piece->getSymbol() != 'K') 
             {
                 for (int newRow = 0; newRow < 8; ++newRow) 
@@ -72,15 +72,15 @@ bool chessboard::checkmate_after_one_move() {
                     for (int newCol = 0; newCol < 8; ++newCol) 
                     {
                         std::string targetPosition = std::string(1, newCol + 'A') + std::to_string(newRow + 1);
-                        if (piece->underAttack(targetPosition, board) && (board[newRow][newCol] == nullptr)) 
+                        if (piece->underAttack(targetPosition, myboard) && (myboard[newRow][newCol] == nullptr)) 
                         {
                             int originalRow = piece->getRow();
                             int originalCol = piece->getCol();
-                            figure* targetPiece = board[newRow][newCol];
+                            figure* targetPiece = myboard[newRow][newCol];
 
                             piece->move(targetPosition);
-                            board[originalRow][originalCol] = nullptr;
-                            board[newRow][newCol] = piece;
+                            myboard[originalRow][originalCol] = nullptr;
+                            myboard[newRow][newCol] = piece;
                             if (mateAnalyse(kingPosition) && !take(kingPosition)) 
                             {   
                                 print();
@@ -89,8 +89,8 @@ bool chessboard::checkmate_after_one_move() {
                             }
 
                             piece->move(std::string(1, originalCol + 'A') + std::to_string(originalRow + 1));
-                            board[originalRow][originalCol] = piece;
-                            board[newRow][newCol] = targetPiece;
+                            myboard[originalRow][originalCol] = piece;
+                            myboard[newRow][newCol] = targetPiece;
                         }
                     }
                 }
@@ -100,14 +100,14 @@ bool chessboard::checkmate_after_one_move() {
     return false;
 }
 
-bool chessboard::checkAnalyse(const std::string& kingPosition)
+bool board::checkAnalyse(const std::string& kingPosition)
 {
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
-            figure* piece = board[row][col];
+            figure* piece = myboard[row][col];
             if (piece != nullptr && piece->getColor() != "Black") 
             {
-                if (piece->underAttack(kingPosition, board)) 
+                if (piece->underAttack(kingPosition, myboard)) 
                 {
                     
                     if (piece->getSymbol() == 'P')
@@ -128,7 +128,7 @@ bool chessboard::checkAnalyse(const std::string& kingPosition)
 }
 
 
-bool chessboard::mateAnalyse(const std::string& kingPosition) 
+bool board::mateAnalyse(const std::string& kingPosition) 
 {
     if (!checkAnalyse(kingPosition)) 
     {
@@ -157,7 +157,7 @@ bool chessboard::mateAnalyse(const std::string& kingPosition)
     return true; 
 }
 
-void chessboard::print()
+void board::print()
 {
     std::cout << "  A B C D E F G H" << std::endl;
 
@@ -166,13 +166,13 @@ void chessboard::print()
         std::cout << row + 1 << " ";
         for (int col = 0; col < 8; col++) 
         {
-            if (board[row][col] == nullptr) 
+            if (myboard[row][col] == nullptr) 
             {
                 std::cout << "- ";
             } 
             else 
             {
-                std::cout << board[row][col]->getSymbol() << " ";
+                std::cout << myboard[row][col]->getSymbol() << " ";
             }
         }
         std::cout << row + 1 << " " << std::endl;
@@ -180,12 +180,12 @@ void chessboard::print()
     std::cout << "  A B C D E F G H" << std::endl;
 }
 
-bool chessboard::getBoard()
+bool board::getBoard()
 {
     return inBoard;
 }
 
-bool chessboard::take(const std::string& kingPosition) 
+bool board::take(const std::string& kingPosition) 
 {
     int kingRow = kingPosition[1] - '1';
     int kingCol = kingPosition[0] - 'A';
@@ -201,20 +201,20 @@ bool chessboard::take(const std::string& kingPosition)
         if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) 
         {
             std::string newKingPosition = std::string(1, newCol + 'A') + std::to_string(newRow + 1);
-            figure* targetPiece = board[newRow][newCol];
+            figure* targetPiece = myboard[newRow][newCol];
 
             if (targetPiece != nullptr && targetPiece->getColor() != "Black") 
             {
-                figure* originalPiece = board[kingRow][kingCol];
+                figure* originalPiece = myboard[kingRow][kingCol];
 
-                board[kingRow][kingCol] = nullptr;
-                board[newRow][newCol] = originalPiece;
+                myboard[kingRow][kingCol] = nullptr;
+                myboard[newRow][newCol] = originalPiece;
                 originalPiece->move(newKingPosition);
 
                 bool inCheck = checkAnalyse(newKingPosition);
 
-                board[newRow][newCol] = targetPiece;
-                board[kingRow][kingCol] = originalPiece;
+                myboard[newRow][newCol] = targetPiece;
+                myboard[kingRow][kingCol] = originalPiece;
                 originalPiece->move(kingPosition);
 
                 if (!inCheck) 

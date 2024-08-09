@@ -9,7 +9,7 @@ public:
     pawn(const std::string&, const std::string&);
     ~pawn();
     
-    bool underAttack(const std::string&, figure* board[8][8]) override;
+    bool underAttack(const std::string&, figure* myboard[8][8]) override;
     void move(const std::string&) override;
     void print() override;
     char getSymbol() const override;

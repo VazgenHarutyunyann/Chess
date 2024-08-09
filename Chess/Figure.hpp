@@ -13,7 +13,7 @@ public:
     figure(const std::string&, const std::string&);
     virtual ~figure();
 
-    virtual bool underAttack(const std::string&, figure* board[8][8]) = 0;
+    virtual bool underAttack(const std::string&, figure* myboard[8][8]) = 0;
     virtual void move(const std::string&) = 0;
     virtual void print() = 0;
     virtual char getSymbol() const = 0;

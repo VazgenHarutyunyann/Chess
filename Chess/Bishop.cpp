@@ -11,7 +11,7 @@ bishop::~bishop()
 {
 
 }
-bool bishop::underAttack(const std::string& p, figure* board[8][8])
+bool bishop::underAttack(const std::string& p, figure* myboard[8][8])
 {
     int newRow = p[1] - '1';
     int newCol = p[0] - 'A';
@@ -29,7 +29,7 @@ bool bishop::underAttack(const std::string& p, figure* board[8][8])
     int col = place[0] - 'A' + colStep;
     while (row != newRow && col != newCol) 
     {
-        if (board[row][col] != nullptr) 
+        if (myboard[row][col] != nullptr) 
         {
             return false;
         }

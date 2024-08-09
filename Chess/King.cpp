@@ -5,13 +5,13 @@
 
 king::king(const std::string& place, const std::string& color) : figure(place, color)
 {
-    symbol = 'K';
+    symbol = 'K';       
 }
 king::~king()
 {
 
 }
-bool king::underAttack(const std::string& p, figure* board[8][8])
+bool king::underAttack(const std::string& p, figure* myboard[8][8])
 {
     int newRow = p[1] - '1';
     int newCol = p[0] - 'A';

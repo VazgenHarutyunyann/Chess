@@ -7,24 +7,24 @@
 #include "Knight.hpp"
 #include "Pawn.hpp"
 #include "King.hpp"
-#include "board.hpp"
+#include "Board.hpp"
 
 int main()
 {
-    chessboard board;
+    board myboard;
 
-    board.placepiece("H2", new queen("H2", "White"));
-    board.placepiece("C1", new king("C1", "White"));
-    board.placepiece("B2" , new rook("B2", "White"));
+    myboard.placepiece("H2", new queen("H2", "White"));
+    myboard.placepiece("C1", new king("C1", "White"));
+    myboard.placepiece("B2" , new rook("B2", "White"));
 
-    board.placepiece("A8", new king("A8", "Black"));
+    myboard.placepiece("A8", new king("A8", "Black"));
 
-    if (board.getBoard())
+    if (myboard.getBoard())
     {
-        board.print();
+        myboard.print();
         std::cout << std::endl;
 
-        if (!board.checkmate_after_one_move())
+        if (!myboard.checkmate_after_one_move())
         {
             std::cout << "In this position there is not checkmate: ";
         }

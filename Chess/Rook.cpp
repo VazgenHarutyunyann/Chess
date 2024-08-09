@@ -11,7 +11,7 @@ rook::~rook()
 {
 
 }
-bool rook::underAttack(const std::string& p, figure* board[8][8])
+bool rook::underAttack(const std::string& p, figure* myboard[8][8])
 {
     int newRow = p[1] - '1';
     int newCol = p[0] - 'A';
@@ -35,8 +35,8 @@ bool rook::underAttack(const std::string& p, figure* board[8][8])
 
     for (int i = start + 1; i < end; ++i) 
     {
-        if ((board[place[1] - '1'][i] != nullptr) ||
-            (board[i][place[0] - 'A'] != nullptr)) 
+        if ((myboard[place[1] - '1'][i] != nullptr) ||
+            (myboard[i][place[0] - 'A'] != nullptr)) 
         {
             return false; 
         }

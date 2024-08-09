@@ -1,15 +1,15 @@
-#ifndef __CHESSBOARD__HPP__
-#define __CHESSBOARD__HPP__
+#ifndef __BOARD__HPP__
+#define __BOARD__HPP__
 
 #include "Figure.hpp"
 
-class chessboard
+class board
 {
 private:
-    figure* board[8][8];
+    figure* myboard[8][8];
     static bool inBoard;
 public:
-    chessboard();
+    board();
     void placepiece(const std::string&, figure*);
     bool checkmate_after_one_move();
     bool mateAnalyse(const std::string&);
@@ -17,7 +17,7 @@ public:
     void print();
     static bool getBoard();
     bool take(const std::string&);
-    ~chessboard();
+    ~board();
 };
 
-#endif //__CHESSBOARD__HPP__
+#endif //__BOARD__HPP__
